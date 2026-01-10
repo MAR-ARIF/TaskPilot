@@ -5,22 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TaskPilot</title>
     <link rel="stylesheet" href="styles/sidebar.css">
+    <link rel="stylesheet" href="styles/MyTask.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <aside class="side-bar">
+            <h1 class="side-header">TaskPilot</h1>
+            <p class="side-header-bl">Stay Productive</p>
             <ul>
-                <li>Dashboard</li>
-                <li>Tasks</li>
-                <li>Focus Timer</li>
-                <li>Stats</li>
-                <li>settings</li>
+                <li><i class="fa fa-home"></i> Dashboard</li>
+                <li> <i class="fa fa-tasks"></i> Tasks</li>
+                <li> <i class="fa fa-hourglass"></i> Focus Timer</li>
+                <li> <i class="fa fa-chart-bar"></i> Stats</li>
+                <li><i class="fa fa-sliders"></i> Settings</li>
             </ul>
         </aside>
-        <main>
-            <h1>Welcome to TaskPilot!</h1>
-            <h2>Manage your tasks efficiently.</h2>
+        <main class="main">
+           
+            <section id="dashboard" class="page">
+            
+                <h1>Welcome to TaskPilot!</h1>
+                <p>Manage your tasks efficiently.</p>
+            
+            
+                <p class="date">Monday, 1 January 2026</p>
+                <div class="dash-tasks">
+                    <div class="todo">
+                        <h1>Your Tasks to do today: <h1/p>
+                        <ul>
+                            <li>jjj</li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="completed">
+                        <p>Tasks Completed: </p>
+                        <ul>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                    
+                </div>
+                
+                <p id="motivation">Stay focused! You have got this!</p>
+            </section>
+            <section id="tasks" class="page">
+                <h1>My Tasks</h1>
+                <p>Organize and Manage all your tasks</p>
+                <div class="add-task">
+                    <input type="text" id="task-input" placeholder="Add a new to do...">
+                    <button id="add-task">+  Add Task</button>
+                </div>
+                <div class="completion-bar">
+                    <button class="active">All (5)</button>
+                    <button>Active(3)</button>
+                    <button>Completed(2)</button>
+                </div>
+                    
+                <ul id="task-list">
+                    <li class="task">
+                        <label>
+                            <input type="checkbox" class="task-check">
+                            <span class="task-text">Start a new focus and be tough</span>
+                        </label>
+                        <button>
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                    </li>
+                    <li class="task">
+                        <label>
+                            <input type="checkbox" class="task-check">
+                            <span class="task-text">Start a new focus and be tough</span>
+                        </label>
+                        <button>
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                        
+
+                    </li>
+                    <li class="task">
+                        <label>
+                            <input type="checkbox" class="task-check">
+                            <span class="task-text">Start a new focus and be tough</span>
+                        </label>
+                        <button>
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                        
+
+                    </li>
+                </ul>
+                <div class="last-bar">
+                    <p>Total: 5</p>
+                    <p>Completed: 2</p>
+                </div>
+              
+               
+                
+
+            </section>
+            <section class="page active">
+                <h1>Focus Timer</h1>
+                <p>Use the Pomodoro technique to stay focused.</p>
+
+            </section>
+            
         </main>
+        
     </div>
    
 </body>

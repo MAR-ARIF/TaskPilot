@@ -4,13 +4,14 @@ body{
     margin: 0;
 }
 .main{
-    margin-left: 150px;
+    margin-left: 240px;
+    padding: 30px 100px 30px 100px;
     display: flex;
-    
+    color: rgb(0, 0, 0);
     flex-direction: column;
     min-height: 100vh;
-    align-items: center;
-    text-align: center;
+    justify-content: left;
+    background-color:rgb(243, 243, 243);
     
 }
 
@@ -19,12 +20,13 @@ body{
    left: 0;
    top: 0;
    height: 100vh;
-   background-color: antiquewhite;
-   width: 150px;
+   background-color: rgb(17, 24, 39);
+   width: 200px;
    padding: 20px;
+   color: white;
 }
 .side-bar ul {
-    list-style: circle;
+    list-style:none ;
     
 }
 .side-bar li{
@@ -35,4 +37,59 @@ body{
     font-size: larger;
     font-weight: bolder;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.side-header{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.side-header-bl{
+    color: rgb(193, 193, 193);
+}
+.page{
+    color: rgb(0, 0, 0);
+    font-size:20px;
+
+}
+.page{
+    display: none;
+}
+.page.active{
+    display: inline;
+}
+.date{
+    color: rgb(78, 99, 109);
+    border: 1px solid rgb(129, 182, 252);
+    border-radius: 8px;
+    padding: 25px 25px;
+    background-color: rgba(207, 224, 251, 0.3);
+    
+}
+.dash-tasks{
+    display: flex;
+    gap: 40px;
+}
+.todo, .completed{
+    border: 1px solid gray;
+    flex: 1;
+    margin-top: 30px;
+    min-width: 0;
+    padding: 20px 20px;
+    background-color: rgb(253, 253, 253);
+    border-radius: 8px;
+}
+.dash-tasks li {
+    list-style: circle;
+    color: rgb(105, 103, 103);
+    font-weight: normal;
+}
+.dash-tasks li::marker{
+    font-size: 34px;
+}
+#motivation{
+    border: 1px solid rebeccapurple;
+    border-radius: 10px;
+    background-color: rgb(193, 2, 75);
+    color: white;
+    text-align: center;
+    padding: 20px 20px;
+    margin-top: 50px;
 }
