@@ -1,0 +1,41 @@
+.timer{
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.9);
+    border-radius: 10px;
+    padding: 20px 20px;
+    background-color: rgb(254, 254, 254);
+}
+.timer button {
+    border: 1px solid rgb(219, 219, 219);
+    background-color: white;
+    border-radius: 10px ;
+    padding: 15px 15px;
+    font-size: large;
+    font-weight: 500;
+    margin: 12px;
+    transition: all 0.2s ease;
+}
+.timer button:hover{
+    cursor: pointer;
+    background-color: rgb(248, 248, 248);
+}
+.time{
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    border-radius: 50px;
+    background: linear-gradient(to bottom right , #3b82f6, #9333ea);
+    color: white;
+    font-size: 100px;
+    font-weight: bold;
+    width: fit-content;
+    margin: 50px auto;
+    padding: 20px;
+}
+.pomodoro{
+    border: 1px solid rgb(124, 124, 235);
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    color: #5f82b9;
+    background-color: #ebf2ff;
+}
