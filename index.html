@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles/sidebar.css">
     <link rel="stylesheet" href="styles/MyTask.css">
     <link rel="stylesheet" href="styles/focusTimer.css">
+    <link rel="stylesheet" href="styles/stat.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -111,7 +112,7 @@
                 
 
             </section>
-            <section class="page active">
+            <section class="page">
                 <h1>Focus Timer</h1>
                 <p>Use the Pomodoro technique to stay focused.</p>
                 <div class="timer">
@@ -128,6 +129,81 @@
                     <p>The Pomodoro Technique is a time management method. Work for 25 minutes, then take a 5-minute break. After 4 cycles, take a longer 15-30 minute break.</p>
                 </div>
 
+            </section>
+            <section class="page">
+                <h1>Statistics</h1>
+                <p>Track your productivity and progress.</p>
+                <div class="cards">
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <span>Total Tasks</span>
+                            <svg width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                            </svg>
+                        </div> 
+                        <h2>5</h2> 
+                    </div>
+                    <div class="stat-card">    
+                        <div class="stat-top">
+                            <span>Active Tasks</span>
+                            <svg width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                            </svg>
+                        </div>
+                        <h2>3</h2>
+                    </div> 
+        
+                    <div class="stat-card">    
+                        <div class="stat-top">
+                            <span>Completed</span>
+                            <svg width="20" height="20" viewbox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                    
+                        </div>
+            
+                        <h2>2</h2>
+                    
+                    </div>
+
+                </div>
+                <div class="progress">
+                    <h4>Completion Rate</h4>
+                    <div class="progress-head">
+                        <span>Progress</span>
+                        <span>47%</span>
+
+                    </div>
+                     <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" style="width: 47%"></div>
+                    </div>
+                    <p>Keep going Arif ! You're almost there.</p>
+                </div>
+                <div class="task-sheet">
+                    <h4>Task Breakdown</h4>
+                    <div class="details">
+                        <div class="completion">
+                            <span>Completed Tasks</span>
+                            <span class="comp">3</span>
+                        </div>
+                        <div class="pending">
+                            <span>Pending Tasks</span>
+                            <span class="pend">2</span>
+                        </div>
+                        <div class="total">
+                            <span>Total</span>
+                            <span class="tot">5</span>
+                        </div>
+                      
+                    </div>
+                </div>
+
+                
+            </section>
+            <section>
+                <h1>Settings</h1>
+                <p>Customize your TaskPilot experience</p>
             </section>
             
         </main>
