@@ -1,0 +1,95 @@
+.sett{
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 10px;
+    background-color: rgb(253,253,253);
+    padding: 10px 30px;
+}
+.profile{
+    border-bottom: 1px solid rgba(189, 189, 189,0.5);
+}
+.name-input,.email-input,.pomo-timer-input,.brk-timer-input{
+    margin-bottom: 20px;
+    border: none;
+    background-color: rgb(240, 240, 240);
+    padding: 10px;
+    border-radius: 8px;
+    width: 97%;
+}
+
+.dark-p{
+    font-size: medium;
+    margin-top: 0;
+    color: gray;
+}
+.toggle{
+    display: flex;
+    justify-content: space-between;
+}
+.switch input{
+    display: none;
+}
+.switch{
+    position: relative;
+    height: 26px;
+    width: 48px;
+}
+.slider{
+    position: absolute;
+    inset: 0;
+    background-color: #d1d5db;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+   
+
+}
+.slider::before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 3px;
+    top: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.switch input:checked + .slider {
+    background-color: #3b82f6;
+}
+
+.switch input:checked + .slider::before {
+    transform: translateX(22px);
+}
+#language{
+    width: 100%;
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 5px;
+    border-radius: 8px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+.appearance{
+    border-bottom: 1px solid rgba(189, 189, 189,0.5) ;
+    
+}
+.change-btn button{
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+    margin-top: 10px;
+    transition: all 0.2s ease;
+}
+.change-btn button:hover{
+    cursor: pointer;
+    background-color: #2563eb;
+    transform: scale(1.05);
+}
+.change-btn button:active{
+    transform: scale(0.97);
+    box-shadow: 0 3px 8px rgba(59, 130, 246, 0.25);
+}
+
