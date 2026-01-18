@@ -20,16 +20,16 @@
             <h1 class="side-header">TaskPilot</h1>
             <p class="side-header-bl">Stay Productive</p>
             <ul>
-                <li><i class="fa fa-home"></i> Dashboard</li>
-                <li> <i class="fa fa-tasks"></i> Tasks</li>
-                <li> <i class="fa fa-hourglass"></i> Focus Timer</li>
-                <li> <i class="fa fa-chart-bar"></i> Stats</li>
-                <li><i class="fa fa-sliders"></i> Settings</li>
+                <li class="actv" data-page="dashboard"><i class="fa fa-home"></i> Dashboard</li>
+                <li data-page="tasks"> <i class="fa fa-tasks"></i> Tasks</li>
+                <li data-page="focus" > <i class="fa fa-hourglass"></i> Focus Timer</li>
+                <li data-page="stat" > <i class="fa fa-chart-bar"></i> Stats</li>
+                <li data-page="sett" ><i class="fa fa-sliders"></i> Settings</li>
             </ul>
         </aside>
         <main class="main">
            
-            <section id="dashboard" class="page">
+            <section id="dashboard" class="page active">
             
                 <h1>Welcome to TaskPilot!</h1>
                 <p>Manage your tasks efficiently.</p>
@@ -38,7 +38,7 @@
                 <p class="date">Monday, 1 January 2026</p>
                 <div class="dash-tasks">
                     <div class="todo">
-                        <h1>Your Tasks to do today: <h1/p>
+                        <h3>Your Tasks to do today: </h3>
                         <ul>
                             <li>jjj</li>
                             <li></li>
@@ -46,7 +46,7 @@
                         </ul>
                     </div>
                     <div class="completed">
-                        <p>Tasks Completed: </p>
+                        <h3>Tasks Completed: </h3>
                         <ul>
                             <li></li>
                             <li></li>
@@ -113,7 +113,7 @@
                 
 
             </section>
-            <section class="page">
+            <section id="focus" class="page">
                 <h1>Focus Timer</h1>
                 <p>Use the Pomodoro technique to stay focused.</p>
                 <div class="timer">
@@ -131,7 +131,7 @@
                 </div>
 
             </section>
-            <section class="page">
+            <section id="stat" class="page">
                 <h1>Statistics</h1>
                 <p>Track your productivity and progress.</p>
                 <div class="cards">
@@ -202,7 +202,7 @@
 
                 
             </section>
-            <section class="page active">
+            <section id="sett" class="page">
                 <h1>Settings</h1>
                 <p>Customize your TaskPilot experience</p>
                 <div class="sett">
@@ -257,6 +257,7 @@
         </main>
         
     </div>
+    <script src="script.js"></script>
    
 </body>
 </html>
