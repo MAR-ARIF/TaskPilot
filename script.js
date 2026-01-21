@@ -1,5 +1,28 @@
 const navItems = document.querySelectorAll(".side-bar li");
 const pages = document.querySelectorAll(".page");
+const addBtn = document.getElementById("add-task-btn");
+const completionBar = document.getElementById("completion-bar");
+const lastBar = document.getElementById("last-bar");
+const todayTask = document.getElementById("today-task");
+const todayComTask = document.getElementById("today-com-task");
+let allTasksCount = 0;
+let activeTasksCount = 0;
+let completedTasksCount = 0;
+
+function barUpdate(){
+    completionBar.innerHTML = `
+    <button id="all-task-btn" class="active">All (${allTasksCount})</button>
+    <button id="active-task-btn">Active(${activeTasksCount})</button>
+    <button id="completed-task-btn">Completed(${completedTasksCount})</button>
+    `;
+}
+function barTotalUpdate(){
+    lastBar.innerHTML = `
+    <p>Total: ${allTasksCount}</p>
+    <p>Completed: ${completedTasksCount}</p>
+    `;
+}
+
 
 navItems.forEach(item => {
     item.addEventListener("click", () => {
@@ -15,3 +38,160 @@ navItems.forEach(item => {
         
     });
 });
+
+function updateDate() {
+    const dateEl = document.getElementById("date-id");
+
+    const today = new Date();
+
+    const options = {
+        weekday : "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    };
+
+    dateEl.textContent = today.toLocaleDateString("en-US",options).replace(",","");
+
+}
+
+updateDate();
+
+
+//loads tasks from local storage or set empty array
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+//save tasks to local storage
+function saveTasks(){
+    localStorage.setItem("tasks",JSON.stringify(tasks));
+}
+
+//render tasks 
+function renderTasks(){
+    const list = document.getElementById("task-list");
+    list.innerHTML = "";
+    todayComTask.innerHTML="";
+    todayTask.innerHTML="";
+
+    allTasksCount = tasks.length;
+    activeTasksCount = tasks.filter( t => !t.done).length;
+    completedTasksCount = tasks.filter(t => t.done).length;
+    barUpdate();
+    barTotalUpdate();
+    document.getElementById("all-task-btn").addEventListener("click", renderTasks);
+    document.getElementById("active-task-btn").addEventListener("click",showActiveTasks);
+    document.getElementById("completed-task-btn").addEventListener("click",showCompletedTasks);
+
+    tasks.forEach ((task, index) => {
+        const li = document.createElement("li");
+        li.classList.add("task");
+        li.innerHTML = `
+            <label>
+                <input type="checkbox" class="task-check" data-index="${index}" ${task.done ? "checked" : ""} >
+                <span class="task-text">${task.text}</span>
+            </label>
+            <button data-index="${index}" class="delete-btn">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+        `;
+        list.appendChild(li);
+        if(!task.done){
+            todayTask.innerHTML += `<li>${task.text}</li>`;
+        } else {
+            todayComTask.innerHTML += `<li>${task.text}</li>`;
+        }
+
+    });
+
+}
+function showActiveTasks() {
+    let activeTasks = tasks.map((task, originalIndex) => ({...task, originalIndex})).filter(t => !t.done);
+    document.getElementById("active-task-btn").classList.add("active");
+    document.getElementById("all-task-btn").classList.remove("active");
+    document.getElementById("completed-task-btn").classList.remove("active");
+    const list = document.getElementById("task-list");
+    list.innerHTML = "";
+    activeTasks.forEach ((task, index) => {
+        const li = document.createElement("li");
+        li.classList.add("task");
+        li.innerHTML = `
+            <label>
+                <input type="checkbox" class="task-check" data-index="${index}" ${task.done ? "checked" : ""} >
+                <span class="task-text">${task.text}</span>
+            </label>
+            <button data-index="${index}" class="delete-btn">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+        `;
+        list.appendChild(li);
+
+    });
+    
+
+};
+function showCompletedTasks() {
+    let completedTasks = tasks.map((task, originalIndex) => ({...task, originalIndex})).filter(t => t.done);
+    document.getElementById("completed-task-btn").classList.add("active");
+    document.getElementById("active-task-btn").classList.remove("active");
+    document.getElementById("all-task-btn").classList.remove("active");
+    const list = document.getElementById("task-list");
+    list.innerHTML = "";
+    completedTasks.forEach ((task, index) => {
+        const li = document.createElement("li");
+        li.classList.add("task");
+        li.innerHTML = `
+            <label>
+                <input type="checkbox" class="task-check" data-index="${index}" ${task.done ? "checked" : ""} >
+                <span class="task-text">${task.text}</span>
+            </label>
+            <button data-index="${index}" class="delete-btn">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+        `;
+        list.appendChild(li);
+
+    });
+    
+
+};
+
+//add task
+function addTask () {
+    const input = document.getElementById("task-input");
+    const text = input.value.trim();
+
+    if (text === "") return;
+
+    tasks.push({text , done: false});
+    allTasksCount++;
+    saveTasks();
+    renderTasks();
+    input.value = "";
+
+}
+addBtn.addEventListener("click", addTask);
+document.getElementById("task-input").addEventListener("keydown",(e)=>{
+    if (e.key === "Enter"){
+        addTask();
+    }
+})
+
+//toggle 
+document.getElementById("task-list").addEventListener("change" , (e) => {
+    if(e.target.type === "checkbox"){
+        const index = e.target.dataset.index;
+        tasks[index].done = e.target.checked ;
+        saveTasks();
+        renderTasks();
+    }
+});
+//delete task 
+document.getElementById("task-list").addEventListener("click" , (e) => {
+    if (e.target.classList.contains("delete-btn") || e.target.closest(".delete-btn")){
+        const index = e.target.dataset.index || e.target.closest(".delete-btn").dataset.index ;
+        tasks.splice(index,1);
+        saveTasks();
+        renderTasks();
+    }
+});
+renderTasks();

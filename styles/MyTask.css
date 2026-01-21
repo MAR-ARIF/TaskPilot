@@ -13,7 +13,7 @@
     background-color: rgb(236, 236, 236);
     font-size: medium;
 }
-#add-task{
+#add-task-btn{
     padding: 10px 10px;
     border: 1px solid black;
     color: white;
@@ -23,16 +23,16 @@
     cursor: pointer;
     transition: all 0.2s ease;
 }
-#add-task:hover{
+#add-task-btn:hover{
     background-color: #797979;
     transform: translateY(-2px);
 
     
 }
-#add-task:active{
+#add-task-btn:active{
     transform: scale(0.97);
 }
-.completion-bar{
+#completion-bar{
     display: flex;
     background-color: #ebebeb;
     border: 1px soli none;
@@ -43,7 +43,7 @@
     gap: 20px;
     
 }
-.completion-bar button{
+#completion-bar button{
     flex: 1;
     padding: 8px 20px;
     border: none;
@@ -54,11 +54,11 @@
     transition: all 0.2s ease;
 
 }
-.completion-bar button.active{
+#completion-bar button.active{
     background-color: white;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1) ;
 }
-.completion-bar button:not(.active):hover{
+#completion-bar button:not(.active):hover{
     cursor: pointer;
     background-color: rgba(255, 255, 255,0.6);
 }
@@ -122,10 +122,11 @@
     background-color: #ebebeb;
     
 }
-.last-bar{
+#last-bar{
     display: flex;
     gap: 20px;
 }
 .fa.fa-trash{
     color: rgb(208, 1, 1);
+    border: none;
 }

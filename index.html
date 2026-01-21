@@ -35,22 +35,18 @@
                 <p>Manage your tasks efficiently.</p>
             
             
-                <p class="date">Monday, 1 January 2026</p>
+                <p  id="date-id" class="date"></p>
                 <div class="dash-tasks">
                     <div class="todo">
                         <h3>Your Tasks to do today: </h3>
-                        <ul>
-                            <li>jjj</li>
-                            <li></li>
-                            <li></li>
+                        <ul id="today-task">
+                            
                         </ul>
                     </div>
                     <div class="completed">
                         <h3>Tasks Completed: </h3>
-                        <ul>
-                            <li></li>
-                            <li></li>
-                            <li></li>
+                        <ul id="today-com-task">
+                            
                         </ul>
                     </div>
                     
@@ -63,48 +59,19 @@
                 <p>Organize and Manage all your tasks</p>
                 <div class="add-task">
                     <input type="text" id="task-input" placeholder="Add a new to do...">
-                    <button id="add-task">+  Add Task</button>
+                    <button id="add-task-btn">+  Add Task</button>
                 </div>
-                <div class="completion-bar">
+                <div id="completion-bar">
                     <button class="active">All (5)</button>
-                    <button>Active(3)</button>
+                    <button id="active-task-btn">Active(3)</button>
                     <button>Completed(2)</button>
                 </div>
                     
                 <ul id="task-list">
                     <li class="task">
-                        <label>
-                            <input type="checkbox" class="task-check">
-                            <span class="task-text">Start a new focus and be tough</span>
-                        </label>
-                        <button>
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                        </button>
-                    </li>
-                    <li class="task">
-                        <label>
-                            <input type="checkbox" class="task-check">
-                            <span class="task-text">Start a new focus and be tough</span>
-                        </label>
-                        <button>
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                        </button>
-                        
-
-                    </li>
-                    <li class="task">
-                        <label>
-                            <input type="checkbox" class="task-check">
-                            <span class="task-text">Start a new focus and be tough</span>
-                        </label>
-                        <button>
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                        </button>
-                        
-
                     </li>
                 </ul>
-                <div class="last-bar">
+                <div id="last-bar">
                     <p>Total: 5</p>
                     <p>Completed: 2</p>
                 </div>

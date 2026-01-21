@@ -74,6 +74,8 @@ body{
     display: flex;
     gap: 40px;
 }
+
+
 .todo, .completed{
     border: 1px solid gray;
     flex: 1;
@@ -85,11 +87,13 @@ body{
 }
 .dash-tasks li {
     list-style: circle;
-    color: rgb(105, 103, 103);
+    color: rgb(110, 110, 110);
     font-weight: normal;
+    margin-bottom: 10px;
+    font-size: 23px;
 }
 .dash-tasks li::marker{
-    font-size: 34px;
+    font-size: 24px;
 }
 #motivation{
     border: 1px solid rebeccapurple;
