@@ -8,7 +8,15 @@ const todayComTask = document.getElementById("today-com-task");
 let allTasksCount = 0;
 let activeTasksCount = 0;
 let completedTasksCount = 0;
-
+const focusBtn = document.getElementById("focus-btn");
+const breakBtn = document.getElementById("break-btn");
+const timer = document.getElementById("timerr");
+const startBtn = document.getElementById("start-btn");
+const resetBtn = document.getElementById("reset-btn");
+let time = 25 * 60;
+let interval;
+let running = false;
+const timerText = document.getElementById("timer-text");
 function barUpdate(){
     completionBar.innerHTML = `
     <button id="all-task-btn" class="active">All (${allTasksCount})</button>
@@ -155,6 +163,14 @@ function showCompletedTasks() {
 
 };
 
+function updateTimer(){
+    let minutes = Math.floor(time/60);
+    let seconds = time % 60;
+
+    timer.textContent = String(minutes).padStart(2,"0") + ":" + String(seconds).padStart(2,"0");
+}
+updateTimer();
+
 //add task
 function addTask () {
     const input = document.getElementById("task-input");
@@ -194,4 +210,44 @@ document.getElementById("task-list").addEventListener("click" , (e) => {
         renderTasks();
     }
 });
+startBtn.addEventListener("click", () => {
+    if (running) return;
+
+    running = true;
+    
+    interval = setInterval(()=>{
+        time--;
+        timerText.innerText= "Timer is running";
+        updateTimer();
+
+        if (time === 0){
+            clearInterval(interval);
+            running = false;
+            timerText.innerText = "Timer Completed";
+        }
+    },1000)
+    
+    
+})
+resetBtn.addEventListener("click",()=>{
+    clearInterval(interval);
+    running = false;
+
+    time = 25 * 60;
+    updateTimer();
+    timerText.innerText="";
+
+});
+
+focusBtn.addEventListener("click",()=> {
+    if(running) return;
+    time = 25 * 60;
+    updateTimer();
+
+})
+breakBtn.addEventListener("click", ()=>{
+    if(running) return;
+    time = 5 * 60;
+    updateTimer();
+})
 renderTasks();
