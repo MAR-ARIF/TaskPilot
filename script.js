@@ -17,6 +17,13 @@ let time = 25 * 60;
 let interval;
 let running = false;
 const timerText = document.getElementById("timer-text");
+const completedCard = document.getElementById("completed-task-card");
+const activeCard = document.getElementById("active-task-card");
+const totalCard = document.getElementById("total-task-card"); 
+const comp = document.getElementById("comp");
+const pend = document.getElementById("pend");
+const tot = document.getElementById("tot");
+
 function barUpdate(){
     completionBar.innerHTML = `
     <button id="all-task-btn" class="active">All (${allTasksCount})</button>
@@ -30,6 +37,17 @@ function barTotalUpdate(){
     <p>Completed: ${completedTasksCount}</p>
     `;
 }
+function cardUpdate(){
+    completedCard.innerText = `${completedTasksCount}`;
+    activeCard.innerText = `${activeTasksCount}`;
+    totalCard.innerText = `${allTasksCount}`;
+    comp.innerText = `${completedTasksCount}`;
+    tot.innerText = `${allTasksCount}`;
+    pend.innerText = `${activeTasksCount}`;
+
+    
+}
+
 
 
 navItems.forEach(item => {
@@ -86,6 +104,7 @@ function renderTasks(){
     completedTasksCount = tasks.filter(t => t.done).length;
     barUpdate();
     barTotalUpdate();
+    cardUpdate();
     document.getElementById("all-task-btn").addEventListener("click", renderTasks);
     document.getElementById("active-task-btn").addEventListener("click",showActiveTasks);
     document.getElementById("completed-task-btn").addEventListener("click",showCompletedTasks);
@@ -251,3 +270,4 @@ breakBtn.addEventListener("click", ()=>{
     updateTimer();
 })
 renderTasks();
+
