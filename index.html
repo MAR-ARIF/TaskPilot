@@ -30,8 +30,8 @@
         <main class="main">
            
             <section id="dashboard" class="page active">
-            
-                <h1>Welcome to TaskPilot!</h1>
+                <h1 id="greeting" style="color: rgb(144, 32, 32);">Good Evening, Guest !</h1>
+                <h2>Welcome to TaskPilot!</h2>
                 <p>Manage your tasks efficiently.</p>
             
             
@@ -140,13 +140,13 @@
                     <h4>Completion Rate</h4>
                     <div class="progress-head">
                         <span>Progress</span>
-                        <span>47%</span>
+                        <span id="pg-amount"></span>
 
                     </div>
                      <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" style="width: 47%"></div>
+                        <div id="p-bar-fill" class="progress-bar-fill" style="width: 47%"></div>
                     </div>
-                    <p>Keep going Arif ! You're almost there.</p>
+                    <p id="pg-motivation">jjj</p>
                 </div>
                 <div class="task-sheet">
                     <h4>Task Breakdown</h4>
@@ -176,7 +176,7 @@
                     <div class="profile">
                         <h3>Profile</h3>
                         <label for="username">Username</label><br>
-                        <input type="text" name="username" class="name-input" placeholder="Enter your name"><br>
+                        <input type="text" name="username" id="name-input" placeholder="Enter your name"><br>
                         <label for="useremail">Email</label><br>
                         <input type="email" name="useremail" class="email-input" placeholder="Enter your email">
 
@@ -212,7 +212,7 @@
                         <input type="number" name="br-timer" class="brk-timer-input" value="5" min="0">
 
                         <div class="change-btn">
-                            <button>Save Changes</button>
+                            <button id="save-cng-btn">Save Changes</button>
                         </div>
                     </div>
                     

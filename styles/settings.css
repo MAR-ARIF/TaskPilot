@@ -7,7 +7,7 @@
 .profile{
     border-bottom: 1px solid rgba(189, 189, 189,0.5);
 }
-.name-input,.email-input,.pomo-timer-input,.brk-timer-input{
+#name-input,.email-input,.pomo-timer-input,.brk-timer-input{
     margin-bottom: 20px;
     border: none;
     background-color: rgb(240, 240, 240);
