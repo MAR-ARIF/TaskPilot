@@ -15,6 +15,16 @@ body{
     
 }
 
+
+.main.dark{
+    color: white;
+    background-color: rgb(131, 131, 131);
+
+}
+.main.dark h1, .main.dark h2{
+    color: white;
+}
+
 .side-bar{
    position: fixed;
    left: 0;

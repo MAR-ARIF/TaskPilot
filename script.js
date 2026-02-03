@@ -30,6 +30,8 @@ const pgMotivation = document.getElementById("pg-motivation");
 const nameInput = document.getElementById("name-input");
 const saveChangesBtn = document.getElementById("save-cng-btn");
 const greetings = document.getElementById("greeting");
+const themeToggle = document.getElementById("theme-toggle");
+const main = document.querySelector(".main");
 function barUpdate(){
     completionBar.innerHTML = `
     <button id="all-task-btn" class="active">All (${allTasksCount})</button>
@@ -298,6 +300,10 @@ breakBtn.addEventListener("click", ()=>{
     time = 5 * 60;
     updateTimer();
 })
+themeToggle.addEventListener("change",() => {
+    main.classList.toggle("dark",themeToggle.checked);
+})
+
 function getTimeGreeting(){
     const hour = new Date().getHours();
 
@@ -309,15 +315,24 @@ function getTimeGreeting(){
         return "Good Evening";
     }
 }
+const savedName = localStorage.getItem("savedName");
+
+if(savedName){
+    const timeGrt = getTimeGreeting();
+    greetings.textContent = `${timeGrt}, ${savedName} !`;
+    nameInput.value =savedName; 
+}
 saveChangesBtn.addEventListener("click",() => {
     const name = nameInput.value.trim();
     const timeGreeting = getTimeGreeting();
 
     if (name !== ""){
         greetings.textContent = `${timeGreeting}, ${name} !`;
+        localStorage.setItem("savedName",name);
 
     } else {
         greetings.textContent = `${timeGreeting}, Guest !`;
+        localStorage.removeItem("savedName");
     }
 })
 renderTasks();
