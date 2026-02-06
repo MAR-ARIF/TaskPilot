@@ -160,6 +160,8 @@ function renderTasks(){
         }
 
     });
+    const lang = localStorage.getItem("language") || "en";
+    translation(lang);
 
 }
 function showActiveTasks() {
@@ -184,6 +186,8 @@ function showActiveTasks() {
         list.appendChild(li);
 
     });
+    const lang = localStorage.getItem("language") || "en";
+    translation(lang);
     
 
 };
@@ -209,6 +213,9 @@ function showCompletedTasks() {
         list.appendChild(li);
 
     });
+    
+    const lang = localStorage.getItem("language") || "en";
+    translation(lang);
     
 
 };
@@ -331,9 +338,70 @@ saveChangesBtn.addEventListener("click",() => {
         localStorage.setItem("savedName",name);
 
     } else {
+        const lang = localStorage.getItem("language") || "en";
+
         greetings.textContent = `${timeGreeting}, Guest !`;
         localStorage.removeItem("savedName");
     }
+
+    const lang = document.getElementById("language").value ;
+    setLanguage(lang);
 })
+function getTextNode(){
+    const walker = document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT,
+        {
+            acceptNode: (node) => {
+                if (node.parentElement && node.parentElement.classList.contains("task")){
+                    return NodeFilter.FILTER_REJECT;
+                }
+                if (node.textContent.trim().length > 0){
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+                return NodeFilter.FILTER_REJECT;
+            }
+        }
+    );
+    const nodes = [];
+    let currentNode;
+    while (currentNode = walker.nextNode()){
+        nodes.push(currentNode);
+    }
+    return nodes;
+}
+function translation(lang) {
+    const nodes = getTextNode();
+
+    for (const node of nodes){
+        if(!node.originalText){
+            node.originalText = node.textContent.trim();
+        }
+        const original = node.originalText;
+
+        if(lang === "en"){
+            node.textContent = original;
+            continue;
+        }
+
+        if(dictionary[original] && dictionary[original][lang]){
+            node.textContent = dictionary[original][lang];
+        }
+       
+
+       
+
+    }
+    
+}
+function setLanguage(lang){
+    localStorage.setItem("language",lang);
+    translation(lang);
+
+
+}
 renderTasks();
+const savedLang = localStorage.getItem("language") || "en";
+document.getElementById("language").value = savedLang;
+translation(savedLang);
 
