@@ -31,12 +31,17 @@ JavaScript (Vanilla)
 📂 Project Structure
 
 TaskPilot/
-├── index.html – Main application UI
-├── script.js – Application logic
-├── styles/
-│ └── main.css – Styling
-├── assets/ – Images and icons
-└── README.md – Project documentation
+├── index.html              # Main application entry point
+├── script.js               # Core application logic
+├── dictionary.js           # Shared data / constants
+├── css/
+│   ├── focusTimer.css      # Focus timer styles
+│   ├── MyTask.css          # Task management styles
+│   ├── settings.css        # Settings page styles
+│   ├── sidebar.css         # Sidebar layout and navigation
+│   └── stat.css            # Statistics and analytics styles
+└── README.md 
+
 
 🚀 Getting Started
 Run Locally
