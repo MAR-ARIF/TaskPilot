@@ -56,7 +56,7 @@ function cardUpdate(){
     
 }
 function progressBarUpdate(){
-    percentage = (completedTasksCount / allTasksCount ) * 100;
+    percentage = Math.round((completedTasksCount / allTasksCount) * 100);
     pBarFill.style.width = percentage+"%" ;
     pgAmount.innerText = percentage + "%";
 
