@@ -290,21 +290,23 @@ resetBtn.addEventListener("click",()=>{
     clearInterval(interval);
     running = false;
 
-    time = 25 * 60;
+    time = timeMinutes * 60;
     updateTimer();
     timerText.innerText="";
 
 });
+let timeMinutes = 25;
+let brktimeMinutes = 5;
 
 focusBtn.addEventListener("click",()=> {
     if(running) return;
-    time = 25 * 60;
+    time = timeMinutes * 60;
     updateTimer();
 
 })
 breakBtn.addEventListener("click", ()=>{
     if(running) return;
-    time = 5 * 60;
+    time = brktimeMinutes * 60;
     updateTimer();
 })
 themeToggle.addEventListener("change",() => {
@@ -343,6 +345,11 @@ saveChangesBtn.addEventListener("click",() => {
         greetings.textContent = `${timeGreeting}, Guest !`;
         localStorage.removeItem("savedName");
     }
+    timeMinutes = parseInt(document.getElementById("foc-time-input").value);
+    brktimeMinutes = parseInt(document.getElementById("brk-time-input").value);
+
+    focusBtn.textContent = `Focus(${timeMinutes} min)`;
+    breakBtn.textContent = `Break(${brktimeMinutes}min)`;
 
     const lang = document.getElementById("language").value ;
     setLanguage(lang);
