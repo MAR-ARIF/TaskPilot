@@ -1,21 +1,29 @@
+//Global Variables
+
+//sidebar navigation buttons
 const navItems = document.querySelectorAll(".side-bar li");
 const pages = document.querySelectorAll(".page");
+//task elements
 const addBtn = document.getElementById("add-task-btn");
 const completionBar = document.getElementById("completion-bar");
 const lastBar = document.getElementById("last-bar");
 const todayTask = document.getElementById("today-task");
 const todayComTask = document.getElementById("today-com-task");
+//task counters
 let allTasksCount = 0;
 let activeTasksCount = 0;
 let completedTasksCount = 0;
+//pomodoro timer elemetns
 const focusBtn = document.getElementById("focus-btn");
 const breakBtn = document.getElementById("break-btn");
 const timer = document.getElementById("timerr");
 const startBtn = document.getElementById("start-btn");
 const resetBtn = document.getElementById("reset-btn");
+//timer logic variables
 let time = 25 * 60;
 let interval;
 let running = false;
+//dashboard cards
 const timerText = document.getElementById("timer-text");
 const completedCard = document.getElementById("completed-task-card");
 const activeCard = document.getElementById("active-task-card");
@@ -23,15 +31,21 @@ const totalCard = document.getElementById("total-task-card");
 const comp = document.getElementById("comp");
 const pend = document.getElementById("pend");
 const tot = document.getElementById("tot");
+
+//progress bar elements
 let percentage;
 const pBarFill = document.getElementById("p-bar-fill");
 const pgAmount = document.getElementById("pg-amount");
 const pgMotivation = document.getElementById("pg-motivation");
+//user setting elements
 const nameInput = document.getElementById("name-input");
 const saveChangesBtn = document.getElementById("save-cng-btn");
 const greetings = document.getElementById("greeting");
 const themeToggle = document.getElementById("theme-toggle");
 const main = document.querySelector(".main");
+
+
+//update filter buttons
 function barUpdate(){
     completionBar.innerHTML = `
     <button id="all-task-btn" class="active">All (${allTasksCount})</button>
@@ -39,12 +53,15 @@ function barUpdate(){
     <button id="completed-task-btn">Completed(${completedTasksCount})</button>
     `;
 }
+
+//update total summary bar
 function barTotalUpdate(){
     lastBar.innerHTML = `
     <p>Total: ${allTasksCount}</p>
     <p>Completed: ${completedTasksCount}</p>
     `;
 }
+//update dashboard cards
 function cardUpdate(){
     completedCard.innerText = `${completedTasksCount}`;
     activeCard.innerText = `${activeTasksCount}`;
@@ -55,18 +72,19 @@ function cardUpdate(){
 
     
 }
+//update progress bar percentage
 function progressBarUpdate(){
     percentage = Math.round((completedTasksCount / allTasksCount) * 100);
     pBarFill.style.width = percentage+"%" ;
     pgAmount.innerText = percentage + "%";
-
+    //change color based on progress
     if (percentage < 40){
         pBarFill.style.background = "#b63636ff"; 
     }
     else {
         pBarFill.style.background = "linear-gradient(to bottom right, #2563eb , #8102ff)" ;    
     }
-
+    //motivational message
     if (percentage < 50 ){
         pgMotivation.innerText = "Every tiny achievements makes a bigger one. Never give up!"
     } else if (percentage > 50 && percentage < 80){
@@ -79,22 +97,22 @@ function progressBarUpdate(){
 }
 
 
-
+//page navigation
 navItems.forEach(item => {
     item.addEventListener("click", () => {
         const pageId = item.dataset.page;
-
+        //hides all pages
         pages.forEach(page => page.classList.remove("active"));
-
+        //show selected pages
         document.getElementById(pageId).classList.add("active");
-
+        //highlight active nav item
         navItems.forEach(nav => nav.classList.remove("actv"));
 
         item.classList.add("actv");
         
     });
 });
-
+//date display
 function updateDate() {
     const dateEl = document.getElementById("date-id");
 
@@ -128,7 +146,7 @@ function renderTasks(){
     list.innerHTML = "";
     todayComTask.innerHTML="";
     todayTask.innerHTML="";
-
+    //update counters
     allTasksCount = tasks.length;
     activeTasksCount = tasks.filter( t => !t.done).length;
     completedTasksCount = tasks.filter(t => t.done).length;
@@ -136,10 +154,12 @@ function renderTasks(){
     barTotalUpdate();
     cardUpdate();
     progressBarUpdate();
+
+    //filter buttons
     document.getElementById("all-task-btn").addEventListener("click", renderTasks);
     document.getElementById("active-task-btn").addEventListener("click",showActiveTasks);
     document.getElementById("completed-task-btn").addEventListener("click",showCompletedTasks);
-
+    //render task lists
     tasks.forEach ((task, index) => {
         const li = document.createElement("li");
         li.classList.add("task");
@@ -153,6 +173,8 @@ function renderTasks(){
             </button>
         `;
         list.appendChild(li);
+
+        //today's task panel
         if(!task.done){
             todayTask.innerHTML += `<li>${task.text}</li>`;
         } else {
@@ -164,6 +186,7 @@ function renderTasks(){
     translation(lang);
 
 }
+//shows active tasks
 function showActiveTasks() {
     let activeTasks = tasks.map((task, originalIndex) => ({...task, originalIndex})).filter(t => !t.done);
     document.getElementById("active-task-btn").classList.add("active");
@@ -191,6 +214,7 @@ function showActiveTasks() {
     
 
 };
+//show completed tasks
 function showCompletedTasks() {
     let completedTasks = tasks.map((task, originalIndex) => ({...task, originalIndex})).filter(t => t.done);
     document.getElementById("completed-task-btn").classList.add("active");
@@ -219,7 +243,7 @@ function showCompletedTasks() {
     
 
 };
-
+//update timer
 function updateTimer(){
     let minutes = Math.floor(time/60);
     let seconds = time % 60;
@@ -267,6 +291,8 @@ document.getElementById("task-list").addEventListener("click" , (e) => {
         renderTasks();
     }
 });
+
+//pomodoro timer start
 startBtn.addEventListener("click", () => {
     if (running) return;
 
@@ -286,6 +312,7 @@ startBtn.addEventListener("click", () => {
     
     
 })
+//timer restart
 resetBtn.addEventListener("click",()=>{
     clearInterval(interval);
     running = false;
@@ -295,24 +322,27 @@ resetBtn.addEventListener("click",()=>{
     timerText.innerText="";
 
 });
+//focus and break timer variables
 let timeMinutes = 25;
 let brktimeMinutes = 5;
-
+//focus mode button
 focusBtn.addEventListener("click",()=> {
     if(running) return;
     time = timeMinutes * 60;
     updateTimer();
 
 })
+//break mode button
 breakBtn.addEventListener("click", ()=>{
     if(running) return;
     time = brktimeMinutes * 60;
     updateTimer();
 })
+//theme toggle
 themeToggle.addEventListener("change",() => {
     main.classList.toggle("dark",themeToggle.checked);
 })
-
+//user greeting settngs
 function getTimeGreeting(){
     const hour = new Date().getHours();
 
@@ -324,6 +354,7 @@ function getTimeGreeting(){
         return "Good Evening";
     }
 }
+//load saved names
 const savedName = localStorage.getItem("savedName");
 
 if(savedName){
@@ -331,6 +362,7 @@ if(savedName){
     greetings.textContent = `${timeGrt}, ${savedName} !`;
     nameInput.value =savedName; 
 }
+//save changes setting button
 saveChangesBtn.addEventListener("click",() => {
     const name = nameInput.value.trim();
     const timeGreeting = getTimeGreeting();
@@ -354,6 +386,8 @@ saveChangesBtn.addEventListener("click",() => {
     const lang = document.getElementById("language").value ;
     setLanguage(lang);
 })
+
+//language translation system
 function getTextNode(){
     const walker = document.createTreeWalker(
         document.body,
@@ -408,6 +442,7 @@ function setLanguage(lang){
 
 }
 renderTasks();
+//initial load
 const savedLang = localStorage.getItem("language") || "en";
 document.getElementById("language").value = savedLang;
 translation(savedLang);
