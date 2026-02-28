@@ -21,14 +21,22 @@ public class TaskController {
 
     @GetMapping
     public List<Task> getTasks() {
+
         return taskService.getAllTasks();
     }
+    @PutMapping("/{id}")
+    public Task updateTask(@PathVariable Long id, @RequestBody Task task) {
+        return taskService.updateTask(id,task);
+    }
+
     @PostMapping
     public Task saveTask(@RequestBody Task task){
+
         return taskService.saveTask(task);
     }
     @DeleteMapping("/delete/{id}")
-    public void deleteTask(@PathVariable Long id){
+    public void deleteTask(@PathVariable Long id)
+    {
         taskService.deleteTask(id);
     }
 

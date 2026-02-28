@@ -28,4 +28,11 @@ public class TaskService {
     public void deleteTask(Long id) {
         taskRepository.deleteById(id);
     }
+
+    public Task updateTask(Long id, Task updatedtask) {
+        Task task = taskRepository.findById(id).get();
+
+        task.setCompleted(updatedtask.getCompleted());
+        return taskRepository.save(task);
+    }
 }

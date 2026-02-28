@@ -131,13 +131,37 @@ function updateDate() {
 
 updateDate();
 
-
+const API_URL ="http://localhost:8080/api/tasks";
 //loads tasks from local storage or set empty array
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let tasks = [];
+
+async function loadTasks() {
+    try{
+        const res = await fetch(API_URL);
+        const data = await res.json();
+        tasks=data;
+        renderTasks();
+    } catch(error){
+        console.error("error loading task",error);
+    }
+    
+}
 
 //save tasks to local storage
-function saveTasks(){
-    localStorage.setItem("tasks",JSON.stringify(tasks));
+async function saveTasks(task){
+   try{
+     const res = await fetch(API_URL,{
+        method : "POST",
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify(task)
+
+    });
+    const data = await res.json();
+    await loadTasks();
+   } catch(error){
+    console.error("Error saving task",error);
+   }
+    
 }
 
 //render tasks 
@@ -148,8 +172,8 @@ function renderTasks(){
     todayTask.innerHTML="";
     //update counters
     allTasksCount = tasks.length;
-    activeTasksCount = tasks.filter( t => !t.done).length;
-    completedTasksCount = tasks.filter(t => t.done).length;
+    activeTasksCount = tasks.filter( t => !t.completed).length;
+    completedTasksCount = tasks.filter(t => t.completed).length;
     barUpdate();
     barTotalUpdate();
     cardUpdate();
@@ -160,25 +184,25 @@ function renderTasks(){
     document.getElementById("active-task-btn").addEventListener("click",showActiveTasks);
     document.getElementById("completed-task-btn").addEventListener("click",showCompletedTasks);
     //render task lists
-    tasks.forEach ((task, index) => {
+    tasks.forEach (task => {
         const li = document.createElement("li");
         li.classList.add("task");
         li.innerHTML = `
             <label>
-                <input type="checkbox" class="task-check" data-index="${index}" ${task.done ? "checked" : ""} >
-                <span class="task-text">${task.text}</span>
+                <input type="checkbox" class="task-check" data-index="${task.taskId}" ${task.completed ? "checked" : ""} >
+                <span class="task-text">${task.taskName}</span>
             </label>
-            <button data-index="${index}" class="delete-btn">
+            <button data-index="${task.taskId}" class="delete-btn">
                 <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
         `;
         list.appendChild(li);
 
         //today's task panel
-        if(!task.done){
-            todayTask.innerHTML += `<li>${task.text}</li>`;
+        if(!task.completed){
+            todayTask.innerHTML += `<li>${task.taskName}</li>`;
         } else {
-            todayComTask.innerHTML += `<li>${task.text}</li>`;
+            todayComTask.innerHTML += `<li>${task.taskName}</li>`;
         }
 
     });
@@ -188,21 +212,21 @@ function renderTasks(){
 }
 //shows active tasks
 function showActiveTasks() {
-    let activeTasks = tasks.map((task, originalIndex) => ({...task, originalIndex})).filter(t => !t.done);
+    let activeTasks = tasks.filter(task => !task.completed);
     document.getElementById("active-task-btn").classList.add("active");
     document.getElementById("all-task-btn").classList.remove("active");
     document.getElementById("completed-task-btn").classList.remove("active");
     const list = document.getElementById("task-list");
     list.innerHTML = "";
-    activeTasks.forEach ((task, index) => {
+    activeTasks.forEach (task=> {
         const li = document.createElement("li");
         li.classList.add("task");
         li.innerHTML = `
             <label>
-                <input type="checkbox" class="task-check" data-index="${index}" ${task.done ? "checked" : ""} >
-                <span class="task-text">${task.text}</span>
+                <input type="checkbox" class="task-check" data-index="${task.taskId}" ${task.completed ? "checked" : ""} >
+                <span class="task-text">${task.taskName}</span>
             </label>
-            <button data-index="${index}" class="delete-btn">
+            <button data-index="${task.taskId}" class="delete-btn">
                 <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
         `;
@@ -216,21 +240,21 @@ function showActiveTasks() {
 };
 //show completed tasks
 function showCompletedTasks() {
-    let completedTasks = tasks.map((task, originalIndex) => ({...task, originalIndex})).filter(t => t.done);
+    let completedTasks = tasks.filter(task => task.completed);
     document.getElementById("completed-task-btn").classList.add("active");
     document.getElementById("active-task-btn").classList.remove("active");
     document.getElementById("all-task-btn").classList.remove("active");
     const list = document.getElementById("task-list");
     list.innerHTML = "";
-    completedTasks.forEach ((task, index) => {
+    completedTasks.forEach (task => {
         const li = document.createElement("li");
         li.classList.add("task");
         li.innerHTML = `
             <label>
-                <input type="checkbox" class="task-check" data-index="${index}" ${task.done ? "checked" : ""} >
-                <span class="task-text">${task.text}</span>
+                <input type="checkbox" class="task-check" data-index="${task.taskId}" ${task.Completed ? "checked" : ""} >
+                <span class="task-text">${task.taskName}</span>
             </label>
-            <button data-index="${index}" class="delete-btn">
+            <button data-index="${task.taskId}" class="delete-btn">
                 <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
         `;
@@ -256,17 +280,20 @@ updateTimer();
 function addTask () {
     const input = document.getElementById("task-input");
     const text = input.value.trim();
+    const newTask = {
+        taskName: text,
+        completed: false
+    };
 
     if (text === "") return;
 
-    tasks.push({text , done: false});
     allTasksCount++;
-    saveTasks();
+    saveTasks(newTask);
     renderTasks();
     input.value = "";
 
 }
-addBtn.addEventListener("click", addTask);
+addBtn.addEventListener("click",addTask);
 document.getElementById("task-input").addEventListener("keydown",(e)=>{
     if (e.key === "Enter"){
         addTask();
@@ -274,12 +301,25 @@ document.getElementById("task-input").addEventListener("keydown",(e)=>{
 })
 
 //toggle 
-document.getElementById("task-list").addEventListener("change" , (e) => {
+document.getElementById("task-list").addEventListener("change" , async (e) => {
     if(e.target.type === "checkbox"){
-        const index = e.target.dataset.index;
-        tasks[index].done = e.target.checked ;
-        saveTasks();
-        renderTasks();
+        const taskId = e.target.dataset.index;
+        const completed = e.target.checked;
+        try {
+            await fetch (`${API_URL}/${taskId}`,{
+                method: "PUT" ,
+                headers: {
+                    "Content-Type" : "application/json"
+                },
+                body: JSON.stringify({
+                    completed: completed
+                })
+            });
+            await loadTasks();
+           
+        } catch (error){
+            console.error(error);
+        }
     }
 });
 //delete task 
@@ -442,6 +482,7 @@ function setLanguage(lang){
 
 }
 renderTasks();
+loadTasks();
 //initial load
 const savedLang = localStorage.getItem("language") || "en";
 document.getElementById("language").value = savedLang;
