@@ -20,4 +20,8 @@ public class UserService {
     public User saveUser(User user) {
         return userRepository.save(user);
     }
+
+    public User getLastUser() {
+        return userRepository.getTopByOrderByCreatedAtDesc();
+    }
 }

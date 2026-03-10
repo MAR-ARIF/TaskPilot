@@ -24,4 +24,8 @@ public class UserController {
     public User saveUser(@RequestBody User user) {
         return userService.saveUser(user);
     }
+    @GetMapping("/latest")
+    public User getLatestUser() {
+        return userService.getLastUser();
+    }
 }

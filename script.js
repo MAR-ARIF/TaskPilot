@@ -39,6 +39,7 @@ const pgAmount = document.getElementById("pg-amount");
 const pgMotivation = document.getElementById("pg-motivation");
 //user setting elements
 const nameInput = document.getElementById("name-input");
+const emailInput = document.getElementById("email-input");
 const saveChangesBtn = document.getElementById("save-cng-btn");
 const greetings = document.getElementById("greeting");
 const themeToggle = document.getElementById("theme-toggle");
@@ -323,12 +324,19 @@ document.getElementById("task-list").addEventListener("change" , async (e) => {
     }
 });
 //delete task 
-document.getElementById("task-list").addEventListener("click" , (e) => {
+document.getElementById("task-list").addEventListener("click" ,async (e) => {
     if (e.target.classList.contains("delete-btn") || e.target.closest(".delete-btn")){
         const index = e.target.dataset.index || e.target.closest(".delete-btn").dataset.index ;
-        tasks.splice(index,1);
-        saveTasks();
-        renderTasks();
+        try {
+            await fetch (`${API_URL}/delete/${index}`,{
+                method: "DELETE",
+
+            });
+            await loadTasks();
+
+        } catch(error){
+            console.error(error);
+        }
     }
 });
 
@@ -395,27 +403,50 @@ function getTimeGreeting(){
     }
 }
 //load saved names
-const savedName = localStorage.getItem("savedName");
+ async function getLastUser() {
+    try{
+        const res = await fetch ("http://localhost:8080/api/user/latest");
+        const data = await res.json();
+        return data;
+    } catch (error){
+        console.error("there is a error loading saved name" + error);
+    }
+   
+    
+}
+async function loadLastUser() {
+    const savedName = await getLastUser();
+    if(savedName){
+        const timeGrt = getTimeGreeting();
+        greetings.textContent = `${timeGrt}, ${savedName.userName} !`;
+        nameInput.value =savedName.userName; 
+    
+}
 
-if(savedName){
-    const timeGrt = getTimeGreeting();
-    greetings.textContent = `${timeGrt}, ${savedName} !`;
-    nameInput.value =savedName; 
+
 }
 //save changes setting button
-saveChangesBtn.addEventListener("click",() => {
+saveChangesBtn.addEventListener("click",async () => {
     const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
     const timeGreeting = getTimeGreeting();
 
     if (name !== ""){
         greetings.textContent = `${timeGreeting}, ${name} !`;
-        localStorage.setItem("savedName",name);
+        const user = {
+            userName : name,
+            userEmail : email
+        }
+        await fetch ("http://localhost:8080/api/user",{
+            method: "POST",
+            headers: { "Content-Type" : "application/json"},
+            body: JSON.stringify(user)
+        })
 
     } else {
         const lang = localStorage.getItem("language") || "en";
 
-        greetings.textContent = `${timeGreeting}, Guest !`;
-        localStorage.removeItem("savedName");
+        greetings.textContent = `${timeGreeting}, !`;
     }
     timeMinutes = parseInt(document.getElementById("foc-time-input").value);
     brktimeMinutes = parseInt(document.getElementById("brk-time-input").value);
@@ -483,6 +514,7 @@ function setLanguage(lang){
 }
 renderTasks();
 loadTasks();
+loadLastUser();
 //initial load
 const savedLang = localStorage.getItem("language") || "en";
 document.getElementById("language").value = savedLang;
