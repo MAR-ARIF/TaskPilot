@@ -207,8 +207,6 @@ function renderTasks(){
         }
 
     });
-    const lang = localStorage.getItem("language") || "en";
-    translation(lang);
 
 }
 //shows active tasks
@@ -234,8 +232,6 @@ function showActiveTasks() {
         list.appendChild(li);
 
     });
-    const lang = localStorage.getItem("language") || "en";
-    translation(lang);
     
 
 };
@@ -252,7 +248,7 @@ function showCompletedTasks() {
         li.classList.add("task");
         li.innerHTML = `
             <label>
-                <input type="checkbox" class="task-check" data-index="${task.taskId}" ${task.Completed ? "checked" : ""} >
+                <input type="checkbox" class="task-check" data-index="${task.taskId}" ${task.completed ? "checked" : ""} >
                 <span class="task-text">${task.taskName}</span>
             </label>
             <button data-index="${task.taskId}" class="delete-btn">
@@ -263,8 +259,6 @@ function showCompletedTasks() {
 
     });
     
-    const lang = localStorage.getItem("language") || "en";
-    translation(lang);
     
 
 };
@@ -420,6 +414,9 @@ async function loadLastUser() {
         const timeGrt = getTimeGreeting();
         greetings.textContent = `${timeGrt}, ${savedName.userName} !`;
         nameInput.value =savedName.userName; 
+        const lang = savedName.savedLanguage || "en";
+        document.getElementById("language").value = lang;
+        setLanguage(lang);
     
 }
 
@@ -429,13 +426,15 @@ async function loadLastUser() {
 saveChangesBtn.addEventListener("click",async () => {
     const name = nameInput.value.trim();
     const email = emailInput.value.trim();
+    const langug = document.getElementById("language").value.trim();
     const timeGreeting = getTimeGreeting();
 
     if (name !== ""){
         greetings.textContent = `${timeGreeting}, ${name} !`;
         const user = {
             userName : name,
-            userEmail : email
+            userEmail : email,
+            savedLanguage : langug
         }
         await fetch ("http://localhost:8080/api/user",{
             method: "POST",
@@ -444,7 +443,6 @@ saveChangesBtn.addEventListener("click",async () => {
         })
 
     } else {
-        const lang = localStorage.getItem("language") || "en";
 
         greetings.textContent = `${timeGreeting}, !`;
     }
@@ -453,9 +451,7 @@ saveChangesBtn.addEventListener("click",async () => {
 
     focusBtn.textContent = `Focus(${timeMinutes} min)`;
     breakBtn.textContent = `Break(${brktimeMinutes}min)`;
-
-    const lang = document.getElementById("language").value ;
-    setLanguage(lang);
+    translation(langug);
 })
 
 //language translation system
@@ -507,16 +503,11 @@ function translation(lang) {
     
 }
 function setLanguage(lang){
-    localStorage.setItem("language",lang);
     translation(lang);
-
-
 }
+
 renderTasks();
 loadTasks();
 loadLastUser();
 //initial load
-const savedLang = localStorage.getItem("language") || "en";
-document.getElementById("language").value = savedLang;
-translation(savedLang);
 
